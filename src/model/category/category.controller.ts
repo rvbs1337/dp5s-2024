@@ -12,6 +12,11 @@ class CategoryController{
         return res.json(category)
     }
 
+    async findAll(req: Request, res: Response){
+        const category = await new CategoryService().findAll()
+        return res.json(category)
+    }
+
     async updateById(req: Request, res: Response){
         const category = await new CategoryService().updateById(req.params.id, req.body)
         return res.json(category)

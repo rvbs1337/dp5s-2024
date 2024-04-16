@@ -11,6 +11,11 @@ export class CategoryService{
         return foundCategory
     }
 
+    async findAll(){
+        const foundCategory = await categorySchema.find()
+        return foundCategory
+    }
+
     async updateById(id: any, category: any){
         const foundCategory = await categorySchema.findByIdAndUpdate(id, category)
         return foundCategory
