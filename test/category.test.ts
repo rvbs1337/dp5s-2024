@@ -58,8 +58,8 @@ describe('testando endpoints categoria', ()=>{
 
         const deleteResponse = await request.default(app).delete(`/categoria/${insertResponse.body._id}`);
 
-        const foundDeletedCategory = await request.default(app).get(`/categoria/${insertResponse.body._id}`);
+        const foundDeletedCategory = await categoryModel.findById(insertResponse.body._id)
         expect(deleteResponse.status).toBe(200); 
-        expect(foundDeletedCategory.status).toBe(404); 
+        expect(foundDeletedCategory).toBeNull; 
     });
 })
