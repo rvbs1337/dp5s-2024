@@ -15,7 +15,9 @@ describe('testando endpoints tarefas', ()=>{
             data_criacao: dataCriacao,
             data_conclusao: dataConclusao,
             tipo: "Concluida",
-            categoria: 1
+            categoria: 1,
+            status: "Concluida",
+            user: "rubens"
         }
 
         const response = await request.default(app).post('/tarefa').send(taskMock)
@@ -28,6 +30,8 @@ describe('testando endpoints tarefas', ()=>{
         expect(taskMock.data_conclusao).toStrictEqual(foundTask?.data_conclusao)
         expect(taskMock.tipo).toBe(foundTask?.tipo)
         expect(taskMock.categoria).toBe(foundTask?.categoria)
+        expect(taskMock.status).toBe(foundTask?.status)
+        expect(taskMock.user).toBe(foundTask?.user)
     })
 
     it('Deve contar a quantidade de tarefas', async () => {
@@ -45,7 +49,9 @@ describe('testando endpoints tarefas', ()=>{
             data_criacao: new Date(),
             data_conclusao: new Date(),
             tipo: "Pendente",
-            categoria: 2
+            categoria: 2,
+            status: "Pendente",
+            user: "rubens"
         };
         const insertResponse = await request.default(app).post('/tarefa').send(taskMock);
 
@@ -55,7 +61,9 @@ describe('testando endpoints tarefas', ()=>{
             data_criacao: new Date(),
             data_conclusao: new Date(),
             tipo: "Concluída",
-            categoria: 3
+            categoria: 3,
+            status: "Concluida",
+            user: "rubens"
         };
         const updateResponse = await request.default(app).post(`/tarefa/${insertResponse.body._id}`).send(updatedTaskMock);
 
@@ -68,6 +76,8 @@ describe('testando endpoints tarefas', ()=>{
         expect(foundUpdatedTask?.data_conclusao).toStrictEqual(updatedTaskMock.data_conclusao);
         expect(foundUpdatedTask?.tipo).toBe(updatedTaskMock.tipo);
         expect(foundUpdatedTask?.categoria).toBe(updatedTaskMock.categoria);
+        expect(foundUpdatedTask?.status).toBe(updatedTaskMock.status);
+        expect(foundUpdatedTask?.user).toBe(updatedTaskMock.user);
     });
 
     it('Deve deletar uma tarefa existente', async () => {
@@ -77,7 +87,9 @@ describe('testando endpoints tarefas', ()=>{
             data_criacao: new Date(),
             data_conclusao: new Date(),
             tipo: "Pendente",
-            categoria: 4
+            categoria: 4,
+            status: "Pendente",
+            user: "rubens"
         };
         const insertResponse = await request.default(app).post('/tarefa').send(taskMock);
 

@@ -6,7 +6,9 @@ const taskSchema = new Schema({
     data_criacao: Date,
     data_conclusao: Date,
     tipo: String,
-    categoria: Number
+    categoria: Number,
+    status: String,
+    user: String
 },{
     timestamps: true,
 })
