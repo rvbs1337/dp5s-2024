@@ -28,4 +28,45 @@ describe('testando endpoints usuario', ()=>{
         expect(response.status).toEqual(200)
         expect(response.body.length).toEqual(totalUsuarios)
     })
+
+    it('Deve atualizar um usuario existente', async () => {
+        const userMock = {
+            username: "usuario_teste",
+            peso: 70,
+            senha: "senha_teste",
+            email: "usuario_teste@example.com"
+        };
+        const insertResponse = await request.default(app).post('/usuario').send(userMock);
+
+        const updatedUserMock = {
+            username: "usuario_atualizado",
+            peso: 75,
+            senha: "nova_senha",
+            email: "usuario_atualizado@example.com"
+        };
+        const updateResponse = await request.default(app).post(`/usuario/${insertResponse.body._id}`).send(updatedUserMock);
+
+        const foundUpdatedUser = await userModel.findById(insertResponse.body._id);
+        expect(updateResponse.status).toBe(200);
+        expect(foundUpdatedUser?.username).toBe(updatedUserMock.username);
+        expect(foundUpdatedUser?.peso).toBe(updatedUserMock.peso);
+        expect(foundUpdatedUser?.senha).toBe(updatedUserMock.senha);
+        expect(foundUpdatedUser?.email).toBe(updatedUserMock.email);
+    });
+
+    it('Deve deletar um usuario existente', async () => {
+        const userMock = {
+            username: "usuario_para_deletar",
+            peso: 80,
+            senha: "senha_deletar",
+            email: "usuario_deletar@example.com"
+        };
+        const insertResponse = await request.default(app).post('/usuario').send(userMock);
+
+        const deleteResponse = await request.default(app).delete(`/usuario/${insertResponse.body._id}`);
+
+        const foundDeletedUser = await userModel.findById(insertResponse.body._id);
+        expect(deleteResponse.status).toBe(200);
+        expect(foundDeletedUser).toBeNull();
+    });
 })
